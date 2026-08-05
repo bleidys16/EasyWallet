@@ -1,0 +1,18 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.EasyWallet" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <item name="colorPrimary">@color/petroleum_green</item>
+        <item name="colorSecondary">@color/jade_green</item>
+        <item name="colorTertiary">@color/lime_green</item>
+        <item name="android:windowBackground">@color/light_gray</item>
+        <item name="android:statusBarColor">@color/petroleum_green</item>
+    </style>
+
+    <style name="Theme.EasyWallet" parent="Base.Theme.EasyWallet" />
+
+    <style name="CircleImage">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+</resources>

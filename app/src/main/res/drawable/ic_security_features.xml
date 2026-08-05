@@ -1,0 +1,32 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="60dp"
+    android:viewportWidth="200"
+    android:viewportHeight="60">
+
+    <!-- Card Icon -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1"
+        android:pathData="M30,25 L50,25 L50,35 L30,35 Z M30,28 L50,28" />
+
+    <!-- Shield with Lock Icon (Center) -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1"
+        android:pathData="M100,15 L115,20 L115,35 Q115,45 100,50 Q85,45 85,35 L85,20 Z" />
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1"
+        android:pathData="M97,30 L103,30 L103,35 L97,35 Z M98,30 Q98,25 100,25 Q102,25 102,30" />
+
+    <!-- Phone Icon -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1"
+        android:pathData="M150,20 L165,20 Q168,20 168,23 L168,45 Q168,48 165,48 L150,48 Q147,48 147,45 L147,23 Q147,20 150,20 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M157.5,45 A1,1 0 1,1 157.5,43 A1,1 0 1,1 157.5,45" />
+
+</vector>

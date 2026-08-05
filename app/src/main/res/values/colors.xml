@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="petroleum_green">#024E44</color>
+    <color name="dark_green">#013A33</color>
+    <color name="very_dark_green">#002520</color>
+    <color name="jade_green">#0D6E60</color>
+    <color name="lime_green">#C8F15A</color>
+    <color name="mint_green">#67D8B2</color>
+    <color name="light_gray">#F5F7FA</color>
+    <color name="gray_text">#757575</color>
+    <color name="white_alpha_20">#33FFFFFF</color>
+
+    <color name="primary_color">@color/petroleum_green</color>
+    <color name="secondary_color">@color/jade_green</color>
+    <color name="accent_color">@color/lime_green</color>
+</resources>
