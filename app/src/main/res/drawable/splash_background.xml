@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <gradient
+                android:angle="270"
+                android:endColor="@color/very_dark_green"
+                android:startColor="@color/petroleum_green"
+                android:type="linear" />
+        </shape>
+    </item>
+
+    <!-- Subtle circular decoration like the image -->
+    <item android:top="-200dp" android:left="-200dp">
+        <shape android:shape="oval">
+            <solid android:color="#05FFFFFF" />
+            <size android:width="600dp" android:height="600dp" />
+        </shape>
+    </item>
+
+    <item android:bottom="-300dp" android:right="-100dp">
+        <shape android:shape="oval">
+            <solid android:color="#05FFFFFF" />
+            <size android:width="500dp" android:height="500dp" />
+        </shape>
+    </item>
+</layer-list>

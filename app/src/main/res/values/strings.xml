@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">EasyWallet</string>
+    <string name="logo_description">Easy Wallet Logo</string>
+
+    <!-- Splash -->
+    <string name="loading">Cargando...</string>
+    <string name="wallet_digital">Easy\nWallet</string>
+    <string name="slogan">Tu dinero, siempre contigo</string>
+
+    <!-- Home -->
+    <string name="greeting_user">Hola, Bleidys</string>
+    <string name="welcome_back">¡Qué bueno tenerte de vuelta!</string>
+    <string name="balance_available">Saldo disponible</string>
+    <string name="balance_value">$ 4.580.000</string>
+    <string name="main_account">Cuenta principal</string>
+    <string name="account_number">•••• 4580</string>
+    <string name="btn_transfer_label">Transferir</string>
+    <string name="btn_transfer_sub">Enviar dinero</string>
+    <string name="btn_history_label">Historial</string>
+    <string name="btn_history_sub">Ver movimientos</string>
+    <string name="recent_movements">Últimos movimientos</string>
+    <string name="view_all">Ver todos</string>
+    <string name="no_movements">No hay movimientos aún</string>
+
+    <!-- Transfer -->
+    <string name="transfer_header">Transferencia</string>
+    <string name="transfer_quick">Envía dinero de forma rápida</string>
+    <string name="transfer_safe">Seguro, fácil y al instante</string>
+    <string name="recipient_name">Nombre del beneficiario</string>
+    <string name="recipient_hint">Ingresa el nombre completo</string>
+    <string name="amount_label">Valor</string>
+    <string name="amount_hint">$ 0,00</string>
+    <string name="min_transfer_msg">El valor mínimo para transferir es $1.000</string>
+    <string name="btn_send_transfer">Enviar transferencia</string>
+    <string name="security_msg">Tu información está protegida con encriptación de grado bancario.</string>
+    <string name="error_empty_fields">Por favor, completa todos los campos</string>
+    <string name="error_invalid_amount">El monto debe ser mayor a cero</string>
+    <string name="transfer_success">¡Transferencia enviada con éxito!</string>
+
+    <!-- History -->
+    <string name="history_header">Historial de movimientos</string>
+    <string name="current_balance_label">Saldo actual</string>
+</resources>
