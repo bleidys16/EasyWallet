@@ -1,12 +1,29 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.EasyWallet" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.EasyWallet" parent="Theme.Material3.Light.NoActionBar">
         <!-- Customize your light theme here. -->
         <item name="colorPrimary">@color/petroleum_green</item>
         <item name="colorSecondary">@color/jade_green</item>
         <item name="colorTertiary">@color/lime_green</item>
         <item name="android:windowBackground">@color/light_gray</item>
         <item name="android:statusBarColor">@color/petroleum_green</item>
+
+        <!-- Force Font on all levels -->
+        <item name="android:fontFamily">@font/stack_sans_text</item>
+        <item name="fontFamily">@font/stack_sans_text</item>
+        <item name="textAppearanceHeadlineLarge">@style/AppTextAppearance.Headline</item>
+        <item name="textAppearanceBodyLarge">@style/AppTextAppearance.Body</item>
+    </style>
+
+    <style name="AppTextAppearance.Headline" parent="TextAppearance.Material3.HeadlineLarge">
+        <item name="android:fontFamily">@font/stack_sans_text</item>
+        <item name="fontFamily">@font/stack_sans_text</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AppTextAppearance.Body" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:fontFamily">@font/stack_sans_text</item>
+        <item name="fontFamily">@font/stack_sans_text</item>
     </style>
 
     <style name="Theme.EasyWallet" parent="Base.Theme.EasyWallet" />

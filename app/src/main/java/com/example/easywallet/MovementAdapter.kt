@@ -23,13 +23,22 @@ class MovementAdapter(private val movements: List<Movement>) :
             tvMovementDate.text = movement.date
             tvMovementAmount.text = movement.amount
             tvMovementStatus.text = movement.status
+            
+            // Use incoming arrow for recharges (positive) and transfer icon for expenses
+            val iconRes = if (movement.isPositive) R.drawable.ic_arrow_incoming else R.drawable.ic_transfer_modern
+            ivMovementIcon.setImageResource(iconRes)
 
             val amountColor = if (movement.isPositive) {
-                ContextCompat.getColor(root.context, R.color.mint_green)
+                ContextCompat.getColor(root.context, R.color.jade_green)
             } else {
                 android.graphics.Color.RED
             }
             tvMovementAmount.setTextColor(amountColor)
+            
+            ivMovementIcon.imageTintList = android.content.res.ColorStateList.valueOf(
+                if (movement.isPositive) ContextCompat.getColor(root.context, R.color.jade_green)
+                else ContextCompat.getColor(root.context, R.color.petroleum_green)
+            )
         }
     }
 

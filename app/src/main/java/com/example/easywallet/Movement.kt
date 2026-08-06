@@ -5,5 +5,6 @@ data class Movement(
     val date: String,
     val amount: String,
     val status: String,
-    val isPositive: Boolean
+    val isPositive: Boolean,
+    val iconRes: Int
 )

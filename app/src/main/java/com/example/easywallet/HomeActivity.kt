@@ -3,75 +3,115 @@ package com.example.easywallet
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.easywallet.databinding.ActivityHomeBinding
 
-/**
- * Home Activity
- * Main screen of the application showing balance and actions.
- */
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
+    private var isBalanceVisible = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Initialize ViewBinding
+        enableEdgeToEdge()
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupUI()
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+
         setupListeners()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setupUI()
         setupRecyclerView()
     }
 
-    /**
-     * Configures the initial state of the UI components.
-     */
     private fun setupUI() {
-        // Initially, we show the empty state if there are no movements
-        binding.tvEmptyHistory.visibility = View.VISIBLE
-        binding.rvMovements.visibility = View.GONE
+        updateBalanceVisibility()
+        val count = WalletRepository.getNotificationCount()
+        if (count > 0) {
+            binding.tvNotificationBadge.text = count.toString()
+            binding.tvNotificationBadge.visibility = View.VISIBLE
+        } else {
+            binding.tvNotificationBadge.visibility = View.GONE
+            binding.cvNotificationPopup.visibility = View.GONE
+        }
     }
 
-    /**
-     * Sets up click listeners for buttons and navigation items.
-     */
     private fun setupListeners() {
-        // Navigate to TransferActivity via CardButton
-        binding.btnTransfer.setOnClickListener {
+        // Notification Button Logic
+        binding.btnNotifications.setOnClickListener {
+            if (binding.cvNotificationPopup.visibility == View.VISIBLE) {
+                binding.cvNotificationPopup.visibility = View.GONE
+                WalletRepository.clearNotifications()
+                setupUI()
+            } else if (WalletRepository.getNotificationCount() > 0) {
+                binding.tvNotificationMsg.text = WalletRepository.getMovements().firstOrNull()?.type ?: "Nueva recarga recibida"
+                binding.cvNotificationPopup.visibility = View.VISIBLE
+            }
+        }
+
+        binding.btnShowBalance.setOnClickListener {
+            isBalanceVisible = !isBalanceVisible
+            updateBalanceVisibility()
+        }
+
+        binding.btnCentralTransfer.setOnClickListener {
             startActivity(Intent(this, TransferActivity::class.java))
         }
 
-        // Navigate to HistoryActivity via CardButton
-        binding.btnHistory.setOnClickListener {
+        binding.navHistory.setOnClickListener {
             startActivity(Intent(this, HistoryActivity::class.java))
         }
+
+        binding.btnQuickTransfer.setOnClickListener {
+            startActivity(Intent(this, TransferActivity::class.java))
+        }
+
+        binding.btnQuickHistory.setOnClickListener {
+            startActivity(Intent(this, HistoryActivity::class.java))
+        }
+
+        binding.btnQuickRecharge.setOnClickListener {
+            startActivity(Intent(this, RecargaActivity::class.java))
+        }
         
-        // Setup Bottom Navigation View interactions
-        binding.bottomNav.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.nav_transfer -> {
-                    startActivity(Intent(this, TransferActivity::class.java))
-                    true
-                }
-                R.id.nav_history -> {
-                    startActivity(Intent(this, HistoryActivity::class.java))
-                    true
-                }
-                else -> true
-            }
+        binding.btnMenu.setOnClickListener {
+            // Hamburger icon in Home is now decorative as requested
         }
     }
 
-    /**
-     * Initializes the RecyclerView with an empty list as per project requirements.
-     */
+    private fun updateBalanceVisibility() {
+        if (isBalanceVisible) {
+            binding.tvBalanceValue.text = WalletRepository.getFormattedBalance()
+            binding.btnShowBalance.setImageResource(R.drawable.ic_eye_visible)
+        } else {
+            binding.tvBalanceValue.text = "••••••••"
+            binding.btnShowBalance.setImageResource(R.drawable.ic_eye_hidden)
+        }
+    }
+
     private fun setupRecyclerView() {
-        // Initialize with empty list as per requirements
-        val movements = emptyList<Movement>()
-        binding.rvMovements.layoutManager = LinearLayoutManager(this)
-        binding.rvMovements.adapter = MovementAdapter(movements)
+        val movements = WalletRepository.getMovements()
+        if (movements.isEmpty()) {
+            binding.tvEmptyHistory.visibility = View.VISIBLE
+            binding.rvMovements.visibility = View.GONE
+        } else {
+            binding.tvEmptyHistory.visibility = View.GONE
+            binding.rvMovements.visibility = View.VISIBLE
+            val limitedMovements = movements.take(3)
+            binding.rvMovements.layoutManager = LinearLayoutManager(this)
+            binding.rvMovements.adapter = MovementAdapter(limitedMovements)
+        }
     }
 }
