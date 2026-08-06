@@ -33,6 +33,14 @@
             android:name=".HistoryActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".RecargaActivity"
+            android:exported="false" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
     </application>
 
 </manifest>

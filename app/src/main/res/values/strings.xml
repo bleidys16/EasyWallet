@@ -18,6 +18,8 @@
     <string name="btn_transfer_sub">Enviar dinero</string>
     <string name="btn_history_label">Historial</string>
     <string name="btn_history_sub">Ver movimientos</string>
+    <string name="btn_recharge_label">Recargar</string>
+    <string name="btn_recharge_sub">A mi cuenta</string>
     <string name="recent_movements">Últimos movimientos</string>
     <string name="view_all">Ver todos</string>
     <string name="no_movements">No hay movimientos aún</string>
@@ -26,8 +28,12 @@
     <string name="transfer_header">Transferencia</string>
     <string name="transfer_quick">Envía dinero de forma rápida</string>
     <string name="transfer_safe">Seguro, fácil y al instante</string>
+    <string name="destination_bank">Banco destino</string>
+    <string name="select_bank">Selecciona el banco</string>
+    <string name="account_number_label">Número de cuenta</string>
+    <string name="account_number_hint">Ingresa el número de cuenta</string>
     <string name="recipient_name">Nombre del beneficiario</string>
-    <string name="recipient_hint">Ingresa el nombre completo</string>
+    <string name="recipient_hint">Nombre completo del beneficiario</string>
     <string name="amount_label">Valor</string>
     <string name="amount_hint">$ 0,00</string>
     <string name="min_transfer_msg">El valor mínimo para transferir es $1.000</string>
@@ -36,8 +42,29 @@
     <string name="error_empty_fields">Por favor, completa todos los campos</string>
     <string name="error_invalid_amount">El monto debe ser mayor a cero</string>
     <string name="transfer_success">¡Transferencia enviada con éxito!</string>
+    <string name="recharge_success">¡Recarga exitosa!</string>
+
+    <!-- Recharge -->
+    <string name="recharge_header">Recargar cuenta</string>
+    <string name="recharge_quick">Carga dinero a tu cuenta</string>
+    <string name="source_bank">Banco de origen</string>
+    <string name="btn_confirm_recharge">Confirmar recarga</string>
+    <string name="my_account_label">Mi número de cuenta</string>
+    <string name="my_account_value">•••• 4580 (Principal)</string>
+
+    <string-array name="banks_array">
+        <item>Easy Bank</item>
+        <item>Bancolombia</item>
+        <item>Davivienda</item>
+        <item>Nequi</item>
+        <item>Daviplata</item>
+    </string-array>
 
     <!-- History -->
     <string name="history_header">Historial de movimientos</string>
     <string name="current_balance_label">Saldo actual</string>
+    <string name="nav_home">Inicio</string>
+    <string name="nav_wallet">Wallet</string>
+    <string name="nav_analytics">Análisis</string>
+    <string name="nav_history">Historial</string>
 </resources>

@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_transfer_layout"
+    android:id="@+id/main_recharge_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light_gray">
@@ -20,7 +20,7 @@
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/ic_back"
             app:navigationIconTint="@color/white"
-            app:title="@string/transfer_header"
+            app:title="@string/recharge_header"
             app:titleTextColor="@color/white">
 
             <ImageView
@@ -71,7 +71,7 @@
                         android:background="@drawable/circle_decoration"
                         android:backgroundTint="@color/petroleum_green"
                         android:padding="12dp"
-                        android:src="@drawable/ic_transfer_modern"
+                        android:src="@android:drawable/ic_input_add"
                         app:tint="@color/white" />
 
                     <LinearLayout
@@ -83,15 +83,13 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/stack_sans_text"
-                            android:text="@string/transfer_quick"
+                            android:text="@string/recharge_quick"
                             android:textColor="@color/petroleum_green"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/stack_sans_text"
                             android:text="@string/transfer_safe"
                             android:textColor="@color/gray_text"
                             android:textSize="12sp" />
@@ -99,14 +97,14 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Destination Bank -->
+            <!-- Source Bank -->
             <TextView
                 android:id="@+id/tv_label_bank"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="24dp"
-                android:text="@string/destination_bank"
+                android:text="@string/source_bank"
                 android:textColor="@color/petroleum_green"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -131,14 +129,14 @@
                     android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Account Number -->
+            <!-- My Account Info (Static) -->
             <TextView
                 android:id="@+id/tv_label_account"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/account_number_label"
+                android:text="@string/my_account_label"
                 android:textColor="@color/petroleum_green"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -151,6 +149,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="8dp"
+                android:enabled="false"
                 app:layout_constraintTop_toBottomOf="@+id/tv_label_account"
                 app:startIconDrawable="@drawable/ic_card"
                 app:startIconTint="@color/petroleum_green">
@@ -159,40 +158,7 @@
                     android:id="@+id/et_account"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/account_number_hint"
-                    android:inputType="number" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Recipient Name -->
-            <TextView
-                android:id="@+id/tv_label_recipient"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/recipient_name"
-                android:textColor="@color/petroleum_green"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/til_account" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_recipient"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="24dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/tv_label_recipient"
-                app:startIconDrawable="@drawable/ic_profile"
-                app:startIconTint="@color/petroleum_green">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_recipient"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/recipient_hint"
-                    android:inputType="textPersonName" />
+                    android:text="@string/my_account_value" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Amount -->
@@ -206,7 +172,7 @@
                 android:textColor="@color/petroleum_green"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/til_recipient" />
+                app:layout_constraintTop_toBottomOf="@+id/til_account" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_amount"
@@ -241,21 +207,21 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/til_amount" />
 
-            <!-- Send Button -->
+            <!-- Confirm Button -->
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_send_transfer"
+                android:id="@+id/btn_confirm_recharge"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
                 android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="32dp"
                 android:backgroundTint="@color/petroleum_green"
-                android:text="@string/btn_send_transfer"
+                android:text="@string/btn_confirm_recharge"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:cornerRadius="16dp"
-                app:icon="@drawable/ic_transfer_modern"
+                app:icon="@android:drawable/ic_input_add"
                 app:iconGravity="textStart"
                 app:iconTint="@color/white"
                 app:layout_constraintTop_toBottomOf="@+id/tv_min_msg" />
@@ -268,7 +234,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingHorizontal="24dp"
-                app:layout_constraintTop_toBottomOf="@+id/btn_send_transfer">
+                app:layout_constraintTop_toBottomOf="@+id/btn_confirm_recharge">
 
                 <ImageView
                     android:layout_width="20dp"

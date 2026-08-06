@@ -1,26 +1,24 @@
 package com.example.easywallet
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.widget.ArrayAdapter
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.easywallet.databinding.ActivityTransferBinding
+import com.example.easywallet.databinding.ActivityRecargaBinding
 import com.google.android.material.snackbar.Snackbar
 import java.text.SimpleDateFormat
 import java.util.*
 
-class TransferActivity : AppCompatActivity() {
+class RecargaActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityTransferBinding
+    private lateinit var binding: ActivityRecargaBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding = ActivityTransferBinding.inflate(layoutInflater)
+        binding = ActivityRecargaBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
@@ -33,28 +31,8 @@ class TransferActivity : AppCompatActivity() {
         setupDropdown()
         setupListeners()
         
-        // Currency formatting AND real-time balance validation
+        // Currency formatting
         binding.etAmount.addTextChangedListener(CurrencyTextWatcher(binding.etAmount))
-        setupBalanceValidation()
-    }
-
-    private fun setupBalanceValidation() {
-        binding.etAmount.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: Editable?) {
-                val amountStr = s.toString().replace(".", "").trim()
-                val amount = amountStr.toDoubleOrNull() ?: 0.0
-                
-                if (amount > 0 && !WalletRepository.hasSufficientBalance(amount)) {
-                    binding.tilAmount.error = "Saldo insuficiente"
-                    binding.tilAmount.isErrorEnabled = true
-                } else {
-                    binding.tilAmount.error = null
-                    binding.tilAmount.isErrorEnabled = false
-                }
-            }
-        })
     }
 
     private fun setupToolbar() {
@@ -70,18 +48,16 @@ class TransferActivity : AppCompatActivity() {
     }
 
     private fun setupListeners() {
-        binding.btnSendTransfer.setOnClickListener {
-            performTransfer()
+        binding.btnConfirmRecharge.setOnClickListener {
+            performRecharge()
         }
     }
 
-    private fun performTransfer() {
+    private fun performRecharge() {
         val bank = binding.actBank.text.toString().trim()
-        val account = binding.etAccount.text.toString().trim()
-        val recipient = binding.etRecipient.text.toString().trim()
         val amountStr = binding.etAmount.text.toString().trim().replace(".", "")
 
-        if (bank.isEmpty() || account.isEmpty() || recipient.isEmpty() || amountStr.isEmpty()) {
+        if (bank.isEmpty() || amountStr.isEmpty()) {
             Snackbar.make(binding.root, R.string.error_empty_fields, Snackbar.LENGTH_SHORT).show()
             return
         }
@@ -92,25 +68,20 @@ class TransferActivity : AppCompatActivity() {
             return
         }
 
-        if (!WalletRepository.hasSufficientBalance(amount)) {
-            binding.tilAmount.error = "Saldo insuficiente"
-            return
-        }
-
-        // Record Transfer
+        // Create Movement
         val date = SimpleDateFormat("dd MMM yyyy • hh:mm a", Locale("es", "CO")).format(Date())
         val movement = Movement(
-            type = "Transferencia a $recipient",
+            type = "Recarga desde $bank",
             date = date,
-            amount = "- " + WalletRepository.getFormattedBalance(amount),
+            amount = "+ " + WalletRepository.getFormattedBalance(amount),
             status = "Completado",
-            isPositive = false,
-            iconRes = R.drawable.ic_transfer_modern
+            isPositive = true,
+            iconRes = R.drawable.ic_wallet
         )
-        
+
         WalletRepository.addMovement(movement, amount)
 
-        Snackbar.make(binding.root, R.string.transfer_success, Snackbar.LENGTH_LONG)
+        Snackbar.make(binding.root, R.string.recharge_success, Snackbar.LENGTH_LONG)
             .addCallback(object : Snackbar.Callback() {
                 override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
                     super.onDismissed(transientBottomBar, event)
