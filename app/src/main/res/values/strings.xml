@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">EasyWallet</string>
     <string name="logo_description">Easy Wallet Logo</string>
+    <string name="menu_description">Menú principal</string>
 
     <!-- Splash -->
     <string name="loading">Cargando...</string>
@@ -53,7 +54,6 @@
     <string name="my_account_value">•••• 4580 (Principal)</string>
 
     <string-array name="banks_array">
-        <item>Easy Bank</item>
         <item>Bancolombia</item>
         <item>Davivienda</item>
         <item>Nequi</item>

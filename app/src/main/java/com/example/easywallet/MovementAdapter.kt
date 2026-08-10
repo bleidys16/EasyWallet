@@ -24,21 +24,26 @@ class MovementAdapter(private val movements: List<Movement>) :
             tvMovementAmount.text = movement.amount
             tvMovementStatus.text = movement.status
             
-            // Use incoming arrow for recharges (positive) and transfer icon for expenses
-            val iconRes = if (movement.isPositive) R.drawable.ic_arrow_incoming else R.drawable.ic_transfer_modern
-            ivMovementIcon.setImageResource(iconRes)
+            ivMovementIcon.setImageResource(movement.iconRes)
 
             val amountColor = if (movement.isPositive) {
-                ContextCompat.getColor(root.context, R.color.jade_green)
+                ContextCompat.getColor(root.context, R.color.income_green)
             } else {
-                android.graphics.Color.RED
+                ContextCompat.getColor(root.context, R.color.expense_red)
             }
             tvMovementAmount.setTextColor(amountColor)
             
-            ivMovementIcon.imageTintList = android.content.res.ColorStateList.valueOf(
-                if (movement.isPositive) ContextCompat.getColor(root.context, R.color.jade_green)
-                else ContextCompat.getColor(root.context, R.color.petroleum_green)
-            )
+            // Set icon tint based on positive/negative or keep as is for specific logos
+            val isLogo = movement.iconRes == R.drawable.ic_netflix || 
+                         movement.iconRes == R.drawable.ic_spotify
+            ivMovementIcon.imageTintList = if (isLogo) null else android.content.res.ColorStateList.valueOf(amountColor)
+            
+            // Update status badge background tint
+            tvMovementStatus.backgroundTintList = android.content.res.ColorStateList.valueOf(
+                if (movement.isPositive) ContextCompat.getColor(root.context, R.color.income_green).apply { 0x1A } // 10% opacity
+                else ContextCompat.getColor(root.context, R.color.expense_red).apply { 0x1A }
+            ).withAlpha(26) // ~10% alpha
+            tvMovementStatus.setTextColor(amountColor)
         }
     }
 

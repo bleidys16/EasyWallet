@@ -86,6 +86,11 @@ class TransferActivity : AppCompatActivity() {
             return
         }
 
+        if (account.length < 10) {
+            binding.tilAccount.error = "Número de cuenta inválido (mínimo 10 dígitos)"
+            return
+        }
+
         val amount = amountStr.toDoubleOrNull() ?: 0.0
         if (amount < 1000) {
             Snackbar.make(binding.root, R.string.min_transfer_msg, Snackbar.LENGTH_SHORT).show()
@@ -110,11 +115,12 @@ class TransferActivity : AppCompatActivity() {
         
         WalletRepository.addMovement(movement, amount)
 
-        Snackbar.make(binding.root, R.string.transfer_success, Snackbar.LENGTH_LONG)
+        Snackbar.make(binding.root, R.string.transfer_success, 1500) // 1.5 seconds
             .addCallback(object : Snackbar.Callback() {
                 override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
                     super.onDismissed(transientBottomBar, event)
                     finish()
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                 }
             }).show()
     }

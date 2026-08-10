@@ -42,6 +42,9 @@ class HomeActivity : AppCompatActivity() {
         if (count > 0) {
             binding.tvNotificationBadge.text = count.toString()
             binding.tvNotificationBadge.visibility = View.VISIBLE
+            
+            // Auto-fill popup message
+            binding.tvNotificationMsg.text = WalletRepository.getMovements().firstOrNull()?.type ?: "Nueva recarga recibida"
         } else {
             binding.tvNotificationBadge.visibility = View.GONE
             binding.cvNotificationPopup.visibility = View.GONE
@@ -68,26 +71,32 @@ class HomeActivity : AppCompatActivity() {
 
         binding.btnCentralTransfer.setOnClickListener {
             startActivity(Intent(this, TransferActivity::class.java))
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
 
         binding.navHistory.setOnClickListener {
             startActivity(Intent(this, HistoryActivity::class.java))
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
 
         binding.btnQuickTransfer.setOnClickListener {
             startActivity(Intent(this, TransferActivity::class.java))
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
 
         binding.btnQuickHistory.setOnClickListener {
             startActivity(Intent(this, HistoryActivity::class.java))
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
 
         binding.btnQuickRecharge.setOnClickListener {
             startActivity(Intent(this, RecargaActivity::class.java))
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
-        
-        binding.btnMenu.setOnClickListener {
-            // Hamburger icon in Home is now decorative as requested
+
+        binding.tvViewAll.setOnClickListener {
+            startActivity(Intent(this, HistoryActivity::class.java))
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
     }
 

@@ -16,4 +16,8 @@
     <color name="primary_color">@color/petroleum_green</color>
     <color name="secondary_color">@color/jade_green</color>
     <color name="accent_color">@color/lime_green</color>
+
+    <!-- Movement Colors -->
+    <color name="income_green">#43A047</color>
+    <color name="expense_red">#E53935</color>
 </resources>

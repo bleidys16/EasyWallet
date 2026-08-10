@@ -9,21 +9,30 @@
         <item name="android:statusBarColor">@color/petroleum_green</item>
 
         <!-- Force Font on all levels -->
-        <item name="android:fontFamily">@font/stack_sans_text</item>
-        <item name="fontFamily">@font/stack_sans_text</item>
+        <item name="android:fontFamily">@font/geist</item>
+        <item name="fontFamily">@font/geist</item>
         <item name="textAppearanceHeadlineLarge">@style/AppTextAppearance.Headline</item>
         <item name="textAppearanceBodyLarge">@style/AppTextAppearance.Body</item>
+
+        <!-- Card Style -->
+        <item name="materialCardViewStyle">@style/Widget.EasyWallet.CardView</item>
+    </style>
+
+    <style name="Widget.EasyWallet.CardView" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardCornerRadius">20dp</item>
+        <item name="cardElevation">3dp</item>
+        <item name="strokeWidth">0dp</item>
     </style>
 
     <style name="AppTextAppearance.Headline" parent="TextAppearance.Material3.HeadlineLarge">
-        <item name="android:fontFamily">@font/stack_sans_text</item>
-        <item name="fontFamily">@font/stack_sans_text</item>
+        <item name="android:fontFamily">@font/geist</item>
+        <item name="fontFamily">@font/geist</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="AppTextAppearance.Body" parent="TextAppearance.Material3.BodyLarge">
-        <item name="android:fontFamily">@font/stack_sans_text</item>
-        <item name="fontFamily">@font/stack_sans_text</item>
+        <item name="android:fontFamily">@font/geist</item>
+        <item name="fontFamily">@font/geist</item>
     </style>
 
     <style name="Theme.EasyWallet" parent="Base.Theme.EasyWallet" />

@@ -1,0 +1,18 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+  <!-- Roof -->
+  <path
+      android:fillColor="#024E44"
+      android:pathData="M12,2L2,7v2h20V7L12,2z M12,4.4L18.6,7.5H5.4L12,4.4z"/>
+  <!-- Columns centered under the roof -->
+  <path
+      android:fillColor="#024E44"
+      android:pathData="M5.5,10v7h3v-7H5.5z M10.5,10v7h3v-7H10.5z M15.5,10v7h3v-7H15.5z"/>
+  <!-- Base -->
+  <path
+      android:fillColor="#024E44"
+      android:pathData="M2,19v2h20v-2H2z"/>
+</vector>

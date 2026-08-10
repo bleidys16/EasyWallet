@@ -68,7 +68,6 @@ class RecargaActivity : AppCompatActivity() {
             return
         }
 
-        // Create Movement
         val date = SimpleDateFormat("dd MMM yyyy • hh:mm a", Locale("es", "CO")).format(Date())
         val movement = Movement(
             type = "Recarga desde $bank",
@@ -76,16 +75,17 @@ class RecargaActivity : AppCompatActivity() {
             amount = "+ " + WalletRepository.getFormattedBalance(amount),
             status = "Completado",
             isPositive = true,
-            iconRes = R.drawable.ic_wallet
+            iconRes = R.drawable.ic_arrow_incoming
         )
 
         WalletRepository.addMovement(movement, amount)
 
-        Snackbar.make(binding.root, R.string.recharge_success, Snackbar.LENGTH_LONG)
+        Snackbar.make(binding.root, R.string.recharge_success, 1500) // 1.5 seconds
             .addCallback(object : Snackbar.Callback() {
                 override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
                     super.onDismissed(transientBottomBar, event)
                     finish()
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                 }
             }).show()
     }
