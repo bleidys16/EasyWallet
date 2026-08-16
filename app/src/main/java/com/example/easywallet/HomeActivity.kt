@@ -37,6 +37,9 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setupUI() {
+        val nombreUsuario = intent.getStringExtra("USUARIO_NOMBRE") ?: "Usuario"
+        binding.tvGreeting.text = "Hola, $nombreUsuario"
+        
         updateBalanceVisibility()
         val count = WalletRepository.getNotificationCount()
         if (count > 0) {

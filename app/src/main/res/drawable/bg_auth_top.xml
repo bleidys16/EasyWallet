@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <solid android:color="@color/petroleum_green" />
+        </shape>
+    </item>
+
+    <!-- Subtle geometric shapes -->
+    <item android:top="-150dp" android:left="-150dp">
+        <shape android:shape="oval">
+            <solid android:color="@color/white_alpha_20" />
+            <size android:width="400dp" android:height="400dp" />
+        </shape>
+    </item>
+
+    <item android:bottom="-150dp" android:right="-100dp">
+        <shape android:shape="oval">
+            <solid android:color="@color/white_alpha_20" />
+            <size android:width="300dp" android:height="300dp" />
+        </shape>
+    </item>
+</layer-list>
