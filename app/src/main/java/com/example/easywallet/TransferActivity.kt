@@ -51,6 +51,7 @@ class TransferActivity : AppCompatActivity() {
     private fun loadBalance() {
         lifecycleScope.launch {
             currentBalance = database.transaccionDao().obtenerSaldoPorUsuario(usuarioId) ?: 0.0
+            WalletRepository.setBalance(currentBalance)
         }
     }
 
@@ -62,7 +63,7 @@ class TransferActivity : AppCompatActivity() {
                 val amountStr = s.toString().replace(".", "").trim()
                 val amount = amountStr.toDoubleOrNull() ?: 0.0
                 
-                if (amount > 0 && amount > currentBalance) {
+                if (amount > 0 && !WalletRepository.hasSufficientBalance(amount)) {
                     binding.tilAmount.error = "Saldo insuficiente"
                     binding.tilAmount.isErrorEnabled = true
                 } else {
@@ -113,7 +114,7 @@ class TransferActivity : AppCompatActivity() {
             return
         }
 
-        if (amount > currentBalance) {
+        if (!WalletRepository.hasSufficientBalance(amount)) {
             binding.tilAmount.error = "Saldo insuficiente"
             return
         }

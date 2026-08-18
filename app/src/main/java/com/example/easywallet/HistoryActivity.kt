@@ -43,17 +43,11 @@ class HistoryActivity : AppCompatActivity() {
     private fun loadData() {
         lifecycleScope.launch {
             val saldo = database.transaccionDao().obtenerSaldoPorUsuario(usuarioId) ?: 0.0
-            binding.tvBalanceValue.text = formatCurrency(saldo)
+            binding.tvBalanceValue.text = WalletRepository.getFormattedBalance(saldo)
 
             val transacciones = database.transaccionDao().obtenerTransaccionesPorUsuario(usuarioId)
             setupRecyclerView(transacciones)
         }
-    }
-
-    private fun formatCurrency(amount: Double): String {
-        val format = NumberFormat.getCurrencyInstance(Locale("es", "CO"))
-        format.maximumFractionDigits = 0
-        return format.format(amount).replace("$", "$ ").replace(",", ".")
     }
 
     private fun setupToolbar() {
@@ -75,7 +69,7 @@ class HistoryActivity : AppCompatActivity() {
                 Movement(
                     type = t.nombre,
                     date = t.fecha,
-                    amount = (if (t.tipo == "INGRESO") "+ " else "- ") + formatCurrency(t.monto),
+                    amount = (if (t.tipo == "INGRESO") "+ " else "- ") + WalletRepository.getFormattedBalance(t.monto),
                     status = "Completado",
                     isPositive = t.tipo == "INGRESO",
                     iconRes = t.iconoResId ?: R.drawable.ic_transfer_modern

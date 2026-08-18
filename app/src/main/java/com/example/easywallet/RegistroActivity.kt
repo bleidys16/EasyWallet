@@ -9,6 +9,7 @@ import com.example.easywallet.database.AppDatabase
 import com.example.easywallet.database.Transaccion
 import com.example.easywallet.database.Usuario
 import com.example.easywallet.databinding.ActivityRegistroBinding
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -82,6 +83,9 @@ class RegistroActivity : AppCompatActivity() {
                     if (usuarioExistente != null) {
                         Toast.makeText(this@RegistroActivity, "El correo ya está registrado", Toast.LENGTH_SHORT).show()
                     } else {
+                        // Desactivar el botón para evitar múltiples clics
+                        binding.btnRegistrar.isEnabled = false
+                        
                         val nuevoUsuario = Usuario(nombre = nombre, correo = correo, password = password)
                         val userId = database.usuarioDao().insertarUsuario(nuevoUsuario).toInt()
                         
@@ -97,7 +101,10 @@ class RegistroActivity : AppCompatActivity() {
                         )
                         database.transaccionDao().insertarTransaccion(saldoInicial)
                         
-                        Toast.makeText(this@RegistroActivity, "Usuario registrado correctamente", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@RegistroActivity, "Usuario registrado correctamente. Redirigiendo...", Toast.LENGTH_SHORT).show()
+                        
+                        // Esperar 3 segundos antes de volver al Login
+                        delay(3000)
                         finish()
                     }
                 }

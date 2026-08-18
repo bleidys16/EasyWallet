@@ -1,0 +1,11 @@
+- [x] Modificar `RegistroActivity.kt` para agregar retardo de 3s
+- [x] Modificar `LoginActivity.kt` para agregar retardo de 3s
+- [x] Crear carpeta de evidencias
+- [x] Desplegar aplicación
+- [x] Capturar Evidencia 1: Login inicial
+- [x] Capturar Evidencia 2: Pantalla de Registro
+- [x] Capturar Evidencia 3: Registro exitoso (con mensaje)
+- [x] Capturar Evidencia 4: Login incorrecto (con mensaje)
+- [x] Capturar Evidencia 5: Login exitoso (con mensaje)
+- [x] Capturar Evidencia 6: Pantalla Home
+- [x] Capturar Evidencias de Database Inspector (Código y DB file)

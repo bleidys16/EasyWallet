@@ -70,7 +70,7 @@ class HomeActivity : AppCompatActivity() {
             if (ultima != null && ultima.tipo == "INGRESO") {
                 binding.tvNotificationBadge.text = "1"
                 binding.tvNotificationBadge.visibility = View.VISIBLE
-                binding.tvNotificationMsg.text = "Recibiste ${formatCurrency(ultima.monto)}"
+                binding.tvNotificationMsg.text = "Recibiste ${WalletRepository.getFormattedBalance(ultima.monto)}"
             } else {
                 binding.tvNotificationBadge.visibility = View.GONE
                 binding.cvNotificationPopup.visibility = View.GONE
@@ -170,18 +170,12 @@ class HomeActivity : AppCompatActivity() {
 
     private fun updateBalanceUI() {
         if (isBalanceVisible) {
-            binding.tvBalanceValue.text = formatCurrency(currentBalance)
+            binding.tvBalanceValue.text = WalletRepository.getFormattedBalance(currentBalance)
             binding.btnShowBalance.setImageResource(R.drawable.ic_eye_visible)
         } else {
             binding.tvBalanceValue.text = "••••••••"
             binding.btnShowBalance.setImageResource(R.drawable.ic_eye_hidden)
         }
-    }
-
-    private fun formatCurrency(amount: Double): String {
-        val format = NumberFormat.getCurrencyInstance(Locale("es", "CO"))
-        format.maximumFractionDigits = 0
-        return format.format(amount).replace("$", "$ ").replace(",", ".")
     }
 
     private fun setupRecyclerView(transacciones: List<Transaccion>) {
@@ -196,7 +190,7 @@ class HomeActivity : AppCompatActivity() {
                 Movement(
                     type = t.nombre,
                     date = t.fecha,
-                    amount = (if (t.tipo == "INGRESO") "+ " else "- ") + formatCurrency(t.monto),
+                    amount = (if (t.tipo == "INGRESO") "+ " else "- ") + WalletRepository.getFormattedBalance(t.monto),
                     status = "Completado",
                     isPositive = t.tipo == "INGRESO",
                     iconRes = t.iconoResId ?: R.drawable.ic_transfer_modern
