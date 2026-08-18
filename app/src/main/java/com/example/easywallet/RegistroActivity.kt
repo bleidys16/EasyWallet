@@ -6,9 +6,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.easywallet.database.AppDatabase
+import com.example.easywallet.database.Transaccion
 import com.example.easywallet.database.Usuario
 import com.example.easywallet.databinding.ActivityRegistroBinding
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
 class RegistroActivity : AppCompatActivity() {
 
@@ -80,7 +83,20 @@ class RegistroActivity : AppCompatActivity() {
                         Toast.makeText(this@RegistroActivity, "El correo ya está registrado", Toast.LENGTH_SHORT).show()
                     } else {
                         val nuevoUsuario = Usuario(nombre = nombre, correo = correo, password = password)
-                        database.usuarioDao().insertarUsuario(nuevoUsuario)
+                        val userId = database.usuarioDao().insertarUsuario(nuevoUsuario).toInt()
+                        
+                        // Agregar saldo inicial obligatorio de la guía anterior
+                        val date = SimpleDateFormat("dd MMM yyyy • hh:mm a", Locale("es", "CO")).format(Date())
+                        val saldoInicial = Transaccion(
+                            usuarioId = userId,
+                            nombre = "Saldo inicial",
+                            monto = 4775000.0,
+                            tipo = "INGRESO",
+                            fecha = date,
+                            iconoResId = R.drawable.ic_wallet
+                        )
+                        database.transaccionDao().insertarTransaccion(saldoInicial)
+                        
                         Toast.makeText(this@RegistroActivity, "Usuario registrado correctamente", Toast.LENGTH_SHORT).show()
                         finish()
                     }

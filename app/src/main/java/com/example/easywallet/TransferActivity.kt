@@ -8,20 +8,30 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
+import com.example.easywallet.database.AppDatabase
+import com.example.easywallet.database.Transaccion
 import com.example.easywallet.databinding.ActivityTransferBinding
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
 class TransferActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTransferBinding
+    private lateinit var database: AppDatabase
+    private var usuarioId: Int = -1
+    private var currentBalance: Double = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityTransferBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        database = AppDatabase.getDatabase(this)
+        usuarioId = intent.getIntExtra("USUARIO_ID", -1)
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -33,9 +43,15 @@ class TransferActivity : AppCompatActivity() {
         setupDropdown()
         setupListeners()
         
-        // Currency formatting AND real-time balance validation
         binding.etAmount.addTextChangedListener(CurrencyTextWatcher(binding.etAmount))
+        loadBalance()
         setupBalanceValidation()
+    }
+
+    private fun loadBalance() {
+        lifecycleScope.launch {
+            currentBalance = database.transaccionDao().obtenerSaldoPorUsuario(usuarioId) ?: 0.0
+        }
     }
 
     private fun setupBalanceValidation() {
@@ -46,7 +62,7 @@ class TransferActivity : AppCompatActivity() {
                 val amountStr = s.toString().replace(".", "").trim()
                 val amount = amountStr.toDoubleOrNull() ?: 0.0
                 
-                if (amount > 0 && !WalletRepository.hasSufficientBalance(amount)) {
+                if (amount > 0 && amount > currentBalance) {
                     binding.tilAmount.error = "Saldo insuficiente"
                     binding.tilAmount.isErrorEnabled = true
                 } else {
@@ -97,31 +113,33 @@ class TransferActivity : AppCompatActivity() {
             return
         }
 
-        if (!WalletRepository.hasSufficientBalance(amount)) {
+        if (amount > currentBalance) {
             binding.tilAmount.error = "Saldo insuficiente"
             return
         }
 
-        // Record Transfer
         val date = SimpleDateFormat("dd MMM yyyy • hh:mm a", Locale("es", "CO")).format(Date())
-        val movement = Movement(
-            type = "Transferencia a $recipient",
-            date = date,
-            amount = "- " + WalletRepository.getFormattedBalance(amount),
-            status = "Completado",
-            isPositive = false,
-            iconRes = R.drawable.ic_transfer_modern
-        )
         
-        WalletRepository.addMovement(movement, amount)
+        lifecycleScope.launch {
+            val transaccion = Transaccion(
+                usuarioId = usuarioId,
+                nombre = "Transferencia a $recipient",
+                monto = amount,
+                tipo = "EGRESO",
+                fecha = date,
+                iconoResId = R.drawable.ic_transfer_modern
+            )
+            
+            database.transaccionDao().insertarTransaccion(transaccion)
 
-        Snackbar.make(binding.root, R.string.transfer_success, 1500) // 1.5 seconds
-            .addCallback(object : Snackbar.Callback() {
-                override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
-                    super.onDismissed(transientBottomBar, event)
-                    finish()
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                }
-            }).show()
+            Snackbar.make(binding.root, R.string.transfer_success, 1500)
+                .addCallback(object : Snackbar.Callback() {
+                    override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                        super.onDismissed(transientBottomBar, event)
+                        finish()
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                    }
+                }).show()
+        }
     }
 }

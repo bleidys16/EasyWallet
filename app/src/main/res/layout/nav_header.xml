@@ -6,34 +6,33 @@
     android:background="@color/petroleum_green"
     android:gravity="bottom"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+    android:padding="24dp">
 
     <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_header_profile"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:padding="8dp"
-        android:scaleType="centerInside"
         android:src="@drawable/ic_profile"
         app:shapeAppearanceOverlay="@style/CircleImage"
-        app:strokeColor="@color/white_alpha_20"
-        app:strokeWidth="2dp"
         app:tint="@color/white" />
 
     <TextView
+        android:id="@+id/tv_header_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/geist"
-        android:text="@string/greeting_user"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:layout_marginTop="16dp"
+        android:text="Nombre de Usuario"
+        android:textColor="@color/white"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:id="@+id/tv_header_email"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/geist"
-        android:text="bleidys@easywallet.com" />
+        android:text="usuario@correo.com"
+        android:textColor="@color/white"
+        android:alpha="0.7"
+        android:textSize="14sp" />
 
 </LinearLayout>

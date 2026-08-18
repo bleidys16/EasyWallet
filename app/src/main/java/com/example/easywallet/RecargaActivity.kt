@@ -6,20 +6,29 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
+import com.example.easywallet.database.AppDatabase
+import com.example.easywallet.database.Transaccion
 import com.example.easywallet.databinding.ActivityRecargaBinding
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
 class RecargaActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRecargaBinding
+    private lateinit var database: AppDatabase
+    private var usuarioId: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityRecargaBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        database = AppDatabase.getDatabase(this)
+        usuarioId = intent.getIntExtra("USUARIO_ID", -1)
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -31,7 +40,6 @@ class RecargaActivity : AppCompatActivity() {
         setupDropdown()
         setupListeners()
         
-        // Currency formatting
         binding.etAmount.addTextChangedListener(CurrencyTextWatcher(binding.etAmount))
     }
 
@@ -69,24 +77,27 @@ class RecargaActivity : AppCompatActivity() {
         }
 
         val date = SimpleDateFormat("dd MMM yyyy • hh:mm a", Locale("es", "CO")).format(Date())
-        val movement = Movement(
-            type = "Recarga desde $bank",
-            date = date,
-            amount = "+ " + WalletRepository.getFormattedBalance(amount),
-            status = "Completado",
-            isPositive = true,
-            iconRes = R.drawable.ic_arrow_incoming
-        )
+        
+        lifecycleScope.launch {
+            val transaccion = Transaccion(
+                usuarioId = usuarioId,
+                nombre = "Recarga desde $bank",
+                monto = amount,
+                tipo = "INGRESO",
+                fecha = date,
+                iconoResId = R.drawable.ic_arrow_incoming
+            )
+            
+            database.transaccionDao().insertarTransaccion(transaccion)
 
-        WalletRepository.addMovement(movement, amount)
-
-        Snackbar.make(binding.root, R.string.recharge_success, 1500) // 1.5 seconds
-            .addCallback(object : Snackbar.Callback() {
-                override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
-                    super.onDismissed(transientBottomBar, event)
-                    finish()
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                }
-            }).show()
+            Snackbar.make(binding.root, R.string.recharge_success, 1500)
+                .addCallback(object : Snackbar.Callback() {
+                    override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                        super.onDismissed(transientBottomBar, event)
+                        finish()
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                    }
+                }).show()
+        }
     }
 }
